@@ -9,3 +9,5 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     date_created = models.DateField(default=timezone.now)
+
+    objects = models.Manager()

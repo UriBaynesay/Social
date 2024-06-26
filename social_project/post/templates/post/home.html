@@ -1,4 +1,14 @@
 {% extends "post/_base.html" %}
 {% block content %}
-<h1>hello from home</h1>
+<ul>
+    {% for post in posts %}
+    <li class="my-2">
+        <article class="flex">
+            <a class="mr-4" href="">{{ post.author }}</a>
+            <p>{{ post.content }}</p>
+        </article>
+    </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
