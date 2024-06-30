@@ -1,15 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Social</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'post/main.css' %}"">
 </head>
 <body>
     <header class="text-center">
         <a class="text-xl" href="/">Social</a>
     </header>
-    <main class="px-2">
+    <main class="px-40">
         {% block content%}{% endblock %}
     </main>
 </body>

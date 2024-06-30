@@ -1,5 +1,14 @@
 {% extends "post/_base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
+<form method="POST" class="flex flex-col items-center">
+    {% csrf_token %}
+    <fieldset>
+        {{ form|crispy }}
+    </fieldset>
+    <button type="submit">Post</button>
+</form>
+
 <ul>
     {% for post in posts %}
     <li class="my-2">
