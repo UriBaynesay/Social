@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <title>Social</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'post/main.css' %}"">
+    <link rel="stylesheet" href="{% static 'post/main.css' %}">
 </head>
-<body>
-    <header class="text-center">
+<body class="px-40">
+    <header class="flex justify-between">
         <a class="text-xl" href="/">Social</a>
+        <a class="text-xl" href="{% url 'login' %}">Log in</a>
     </header>
-    <main class="px-40">
+    <main>
         {% block content%}{% endblock %}
     </main>
 </body>

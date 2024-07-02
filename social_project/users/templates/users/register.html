@@ -1,0 +1,14 @@
+{% extends "post/_base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <fieldset>
+        {{ form|crispy }}
+    </fieldset>
+    <a href="{% url 'login' %}">
+        <small>have an Account? Log in here!</small>
+    </a>
+    <button type="submit">Register</button>
+</form>
+{% endblock %}
