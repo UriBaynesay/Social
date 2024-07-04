@@ -1,4 +1,14 @@
 {% extends "post/_base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
+<section class="login-form-container flex flex-col items-center">
 <h1>{{user.username}}</h1>
+<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 " method="post">
+    {% csrf_token %}
+    <fieldset>
+        {{ form|crispy }}
+    </fieldset>
+    <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Save</button>
+</form>
+</section>
 {% endblock %}
