@@ -13,8 +13,9 @@
     {% for post in posts %}
     <li class="my-2">
         <article class="flex">
-            <a class="mr-4" href="">{{ post.author }}</a>
-            <p>{{ post.content }}</p>
+            <a class="mr-4" href="{% url 'post-details' post.pk %}">{{ post.author }}
+                <p>{{ post.content }}</p>
+            </a>
         </article>
     </li>
     {% endfor %}
