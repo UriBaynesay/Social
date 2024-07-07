@@ -16,7 +16,6 @@ def home(request):
 def post_creations(data):
     form = PostCreationForm(data.POST)
     form.instance.author = data.user
-    print(data.user)
     if form.is_valid():
          form.save()
          return True
@@ -29,9 +28,7 @@ def post_details(request,*args, **kwargs):
 @login_required
 def post_create(request):
     if request.method == "POST":
-        form = PostCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        if post_creations(request):
             return redirect("home")    
     form = PostCreationForm()
     return render(request= request, template_name= 'post/post-form.html',context={"form": form})
