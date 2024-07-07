@@ -32,3 +32,17 @@ def post_create(request):
             return redirect("home")    
     form = PostCreationForm()
     return render(request= request, template_name= 'post/post-form.html',context={"form": form})
+
+@login_required
+def post_update(request,*args, **kwargs):
+    post = Post.objects.get(pk= kwargs.get('pk'))
+    if post.author != request.user:
+        return redirect('home')
+    if request.method == "POST":
+        form = PostCreationForm(instance=post, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = PostCreationForm(instance= post)
+    return render(request= request, template_name='post/post-form.html', context={'form':form})
