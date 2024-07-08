@@ -4,4 +4,8 @@
     <h1>{{ post.author }}</h1>
     <p>{{ post.content }}</p>
 </article>
+{% if user == post.author %}
+<a href="{% url 'post-update' post.pk %}">Update</a>
+<a href="{% url 'post-delete' post.pk %}">Delete</a>
+{% endif %}
 {% endblock %}

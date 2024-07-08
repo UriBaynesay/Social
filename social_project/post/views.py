@@ -46,3 +46,12 @@ def post_update(request,*args, **kwargs):
     else:
         form = PostCreationForm(instance= post)
     return render(request= request, template_name='post/post-form.html', context={'form':form})
+
+@login_required
+def post_delete(request,*args, **kwargs):
+    post = Post.objects.get(pk= kwargs.get('pk'))
+    if post.author != request.user:
+        return redirect('home')
+    else:
+        post.delete()
+    return render(request= request, template_name='post/post-delete.html')
