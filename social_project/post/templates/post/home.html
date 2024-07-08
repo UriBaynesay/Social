@@ -13,7 +13,8 @@
     {% for post in posts %}
     <li class="my-2">
         <article class="flex">
-            <a class="mr-4" href="{% url 'post-details' post.pk %}">{{ post.author }}
+            <a class="mr-4" href="{% url 'post-details' post.pk %}">
+                <legend>{{ post.author }} - {{post.date_created}}</legend>     
                 <p>{{ post.content }}</p>
             </a>
         </article>

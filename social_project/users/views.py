@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm
-
-# Create your views here.
+from post.models import Post
 
 def register(request):
     if request.method == "POST":
@@ -16,11 +15,20 @@ def register(request):
     return render(request, template_name="users/register.html", context={"form": form})
 
 @login_required
-def profile(request):
+def profile(request, *args, **kwargs):
     if request.method == "POST":
         form = UserUpdateForm(data= request.POST, instance= request.user)
         if form.is_valid():
             form.save()
-            redirect('profile')    
+            return redirect('profile')    
     form = UserUpdateForm(instance=request.user)
-    return render(request, template_name="users/profile.html",context= {"form": form})
+    posts = Post.objects.filter(author= request.user)
+    return render(request, template_name="users/profile.html",context= {"form": form, "posts":posts})
+
+@login_required
+def delete(request, *args, **kwargs):
+    if request.user.id == kwargs.get("pk"):
+        user = User.objects.get(id= request.user.id)
+        user.delete()
+    return render(request, template_name="users/user-delete.html")
+
