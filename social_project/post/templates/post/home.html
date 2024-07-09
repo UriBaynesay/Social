@@ -1,25 +1,28 @@
 {% extends "post/_base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<form method="POST" class="flex flex-col items-center">
-    {% csrf_token %}
-    <fieldset>
-        {{ form|crispy }}
-    </fieldset>
-    <button type="submit">Post</button>
-</form>
 
-<ul>
-    {% for post in posts %}
-    <li class="my-2">
-        <article class="flex">
-            <a class="mr-4" href="{% url 'post-details' post.pk %}">
-                <legend>{{ post.author }} - {{post.date_created}}</legend>     
-                <p>{{ post.content }}</p>
-            </a>
-        </article>
-    </li>
-    {% endfor %}
-</ul>
+<div class="home-container pt-8">
+    <form method="POST" class="[&*>]:block mb-8">
+        {% csrf_token %}
+        <fieldset>
+         {{ form|crispy }}
+         </fieldset>
+        <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-3xl focus:outline-none focus:shadow-outline" type="submit">Post</button>
+    </form>
+
+    <ul>
+        {% for post in posts %}
+        <li class="my-2">
+            <article class="flex">
+                <a class="mr-4" href="{% url 'post-details' post.pk %}">
+                 <legend class="font-thin">{{ post.author }} - {{post.date_created}}</legend>
+                 <p>{{ post.content }}</p>
+                </a>
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 {% endblock %}
