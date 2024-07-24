@@ -9,3 +9,9 @@ class Post(models.Model):
     date_created = models.DateField(default=timezone.now)
 
     objects = models.Manager()
+
+class Like(models.Model):
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    objects = models.Manager()

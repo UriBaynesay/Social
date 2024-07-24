@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Post
-from .forms import PostCreationForm
+from .models import Post, Like
+from .forms import PostCreationForm, LikeCreationForm
 
 
 def home(request):
@@ -9,8 +9,28 @@ def home(request):
         if post_creations(request):
             return redirect("home")
     form = PostCreationForm()
-    context = {'posts': Post.objects.all(), 'form': form}
+    posts = Post.objects.all()
+    for post in posts:
+        post.likes=list(Like.objects.filter(post_id=post.id))
+        post.liked = False
+        for like in post.likes:
+            if request.user and request.user.id == like.user_id.id:
+                post.liked = True
+    context = {'posts': posts, 'form': form}
     return render(request, 'post/home.html', context)
+
+@login_required
+def _delete_like(request, *args, **kwargs):
+    like = Like.objects.get(post_id=kwargs.get('post_id'), user_id=request.user.id)
+    like.delete()
+    return redirect('home')
+
+def _add_like(request):
+    if request.method == "POST":
+        form = LikeCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return redirect('home')
 
 @login_required
 def post_creations(data):
