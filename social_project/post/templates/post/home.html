@@ -14,11 +14,28 @@
     <ul>
         {% for post in posts %}
         <li class="my-2">
-            <article class="flex">
-                <a class="mr-4" href="{% url 'post-details' post.pk %}">
+            <article>
+                <a class="mr-4 block" href="{% url 'post-details' post.pk %}">
                  <legend class="font-thin">{{ post.author }} - {{post.date_created}}</legend>
                  <p>{{ post.content }}</p>
                 </a>
+                <div>
+                    {{ post.likes|length }}
+                    {% if user.is_authenticated %}
+                        {% if post.liked %}
+                            <a href="{% url 'delete-like' post.id %}">
+                                <button>Dislike</button>
+                            </a>
+                        {% else %}
+                            <form action="{% url 'create-like' %}" method="post">
+                            {% csrf_token %}
+                            <input class="hidden" type="number" name="post_id" value="{{ post.pk }}" id="">
+                            <input class="hidden" type="number" name="user_id" value="{{ user.pk }}" id="">
+                            <button type="submit">Like</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </article>
         </li>
         {% endfor %}
