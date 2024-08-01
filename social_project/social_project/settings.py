@@ -27,6 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Cache definition
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://default:uEaX160tEolTXuJn4RU8EIFZrH60loD8@redis-14608.c311.eu-central-1-1.ec2.redns.redis-cloud.com:14608",
+    }
+}
+
 
 # Application definition
 
