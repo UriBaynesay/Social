@@ -2,20 +2,26 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post, Like
 from .forms import PostCreationForm, LikeCreationForm
+from django.core.cache import cache
 
+CACH_NAME = 'post_cache'
 
 def home(request):
     if request.method == "POST":
         if post_creations(request):
             return redirect("home")
     form = PostCreationForm()
-    posts = Post.objects.all()
-    for post in posts:
-        post.likes=list(Like.objects.filter(post_id=post.id))
-        post.liked = False
-        for like in post.likes:
-            if request.user and request.user.id == like.user_id.id:
-                post.liked = True
+    if cache.get(CACH_NAME):
+       posts = cache.get(CACH_NAME)
+    else : 
+        posts = Post.objects.all()
+        for post in posts:
+            post.likes=list(Like.objects.filter(post_id=post.id))
+            post.liked = False
+            for like in post.likes:
+                if request.user and request.user.id == like.user_id.id:
+                    post.liked = True
+        cache.set(CACH_NAME, posts, 60)
     context = {'posts': posts, 'form': form}
     return render(request, 'post/home.html', context)
 
